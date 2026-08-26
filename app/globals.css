@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy: #0C0E1C;
+  --color-navy-light: #141628;
+  --color-gold: #B8860B;
+  --color-gold-light: #D4A843;
+  --color-cream: #F9F7F4;
+  --color-charcoal: #2C2C2C;
+  --color-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-sidebar-bg: #0F1117;
+  --color-stat-green: #16A34A;
+  --color-stat-red: #DC2626;
+  --color-stat-amber: #F59E0B;
+  --color-status-pending: #F59E0B;
+  --color-status-approved: #16A34A;
+  --color-status-completed: #6B7280;
+
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-charcoal);
+    background-color: #ffffff;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: #ffffff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-rainbow {
+    background: linear-gradient(
+      90deg,
+      #1a237e 0%,
+      #b71c1c 15%,
+      #e65100 25%,
+      #f9a825 35%,
+      #2e7d32 50%,
+      #0277bd 65%,
+      #4a148c 80%,
+      #880e4f 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .rainbow-border-top {
+    position: relative;
+  }
+
+  .rainbow-border-top::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #1a237e 0%,
+      #b71c1c 12%,
+      #e65100 24%,
+      #f9a825 36%,
+      #2e7d32 48%,
+      #0277bd 60%,
+      #4a148c 72%,
+      #880e4f 84%,
+      #1a237e 100%
+    );
+  }
+
+  .rainbow-border-bottom {
+    position: relative;
+  }
+
+  .rainbow-border-bottom::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #1a237e 0%,
+      #b71c1c 12%,
+      #e65100 24%,
+      #f9a825 36%,
+      #2e7d32 48%,
+      #0277bd 60%,
+      #4a148c 72%,
+      #880e4f 84%,
+      #1a237e 100%
+    );
+  }
 }
