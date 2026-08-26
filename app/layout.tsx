@@ -30,6 +30,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/attorney-logo.png",
   },
+  verification: {
+    google: "google4536277da44ae43b",
+  },
   openGraph: {
     title: "MULUALEM DEMISSIE ZERIHUN | Lawyer and Attorney",
     description:
