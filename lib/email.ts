@@ -18,14 +18,15 @@ export async function sendConsultationNotification({
   message,
 }: SendConsultationEmailParams) {
   const apiKey = process.env.RESEND_API_KEY;
-
   const firmEmail = process.env.FIRM_NOTIFICATION_EMAIL || "mulualemdm66@gmail.com";
+  // In Resend free mode without a custom verified domain, from MUST be onboarding@resend.dev
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
   const emailBodyText = `
 New Legal Consultation Request
 ---------------------------------------
 Attorney: Mulualem Demissie Zerihun
-Office: Lideta Sub-City, Merkato Mall, Office No. 134, Addis Ababa
+Office: Lideta Sub-City, Merkato Mall, 1st Floor, Office No. 134, Addis Ababa
 
 Client Details:
 - Full Name: ${name}
@@ -42,7 +43,6 @@ ${message || "No additional notes provided."}
 Submitted via Mulualem Demissie Zerihun Law Portal
   `.trim();
 
-  // If Resend API key is provided, send real live email
   if (apiKey) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -52,24 +52,32 @@ Submitted via Mulualem Demissie Zerihun Law Portal
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Mulualem Demissie Law <inquiries@demissielaw.com>",
+          from: `Mulualem Law Office <${fromEmail}>`,
           to: [firmEmail],
-          subject: `[New Inquiry] ${practiceArea} - ${name}`,
+          reply_to: email,
+          subject: `[New Legal Inquiry] ${practiceArea} - ${name}`,
           text: emailBodyText,
         }),
       });
 
-      return res.ok;
+      const data = await res.json();
+      if (!res.ok) {
+        console.error("Resend API Error details:", data);
+        return false;
+      }
+
+      console.log("Email notification sent successfully:", data);
+      return true;
     } catch (err) {
-      console.error("Email notification dispatch error:", err);
+      console.error("Email notification dispatch exception:", err);
       return false;
     }
   }
 
-  // Log notification to server console in local development
+  // Fallback logging in local dev
   console.log("=== [EMAIL NOTIFICATION DISPATCHED] ===");
   console.log(`To: ${firmEmail}`);
-  console.log(`Subject: [New Inquiry] ${practiceArea} - ${name}`);
+  console.log(`Subject: [New Legal Inquiry] ${practiceArea} - ${name}`);
   console.log(emailBodyText);
   console.log("========================================");
 
