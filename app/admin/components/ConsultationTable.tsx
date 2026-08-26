@@ -126,16 +126,34 @@ export default function ConsultationTable({
 
   const displayData = limit ? data.slice(0, limit) : data;
 
-  const updateStatus = (id: string, newStatus: ConsultationRow["status"]) => {
+  const updateStatus = async (id: string, newStatus: ConsultationRow["status"]) => {
     setData((prev) =>
       prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
     );
     setActiveMenuId(null);
+
+    try {
+      await fetch("/api/consultations", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+    } catch (e) {
+      console.error("Failed to update status on server:", e);
+    }
   };
 
-  const deleteRow = (id: string) => {
+  const deleteRow = async (id: string) => {
     setData((prev) => prev.filter((item) => item.id !== id));
     setActiveMenuId(null);
+
+    try {
+      await fetch(`/api/consultations?id=${id}`, {
+        method: "DELETE",
+      });
+    } catch (e) {
+      console.error("Failed to delete record on server:", e);
+    }
   };
 
   return (
@@ -196,9 +214,9 @@ export default function ConsultationTable({
       {/* Empty State */}
       {!loading && !error && data.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 gap-2 text-center">
-          <p className="text-sm font-semibold text-gray-700">No consultations yet</p>
+          <p className="text-sm font-semibold text-gray-700">No consultation requests yet</p>
           <p className="text-xs text-gray-400">
-            New requests from the website will appear here automatically.
+            When clients book via your website form, their requests will appear here instantly.
           </p>
         </div>
       )}
@@ -253,7 +271,7 @@ export default function ConsultationTable({
                       onClick={() =>
                         setActiveMenuId(activeMenuId === row.id ? null : row.id)
                       }
-                      className="p-1.5 text-[#9CA3AF] hover:text-[#111827] rounded hover:bg-gray-100 transition-colors"
+                      className="p-1.5 text-[#9CA3AF] hover:text-[#111827] rounded hover:bg-gray-100 transition-colors cursor-pointer"
                       aria-label="Actions"
                     >
                       <MoreVertical size={16} />
@@ -266,28 +284,28 @@ export default function ConsultationTable({
                         </div>
                         <button
                           onClick={() => updateStatus(row.id, "APPROVED")}
-                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-amber-50 hover:text-amber-800 flex items-center gap-2 text-left"
+                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-amber-50 hover:text-amber-800 flex items-center gap-2 text-left cursor-pointer"
                         >
                           <CheckCircle2 size={13} className="text-amber-600" />
                           Approve
                         </button>
                         <button
                           onClick={() => updateStatus(row.id, "CONTACTED")}
-                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-800 flex items-center gap-2 text-left"
+                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-800 flex items-center gap-2 text-left cursor-pointer"
                         >
                           <Clock size={13} className="text-blue-600" />
                           Mark Contacted
                         </button>
                         <button
                           onClick={() => updateStatus(row.id, "COMPLETED")}
-                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-green-50 hover:text-green-800 flex items-center gap-2 text-left"
+                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-green-50 hover:text-green-800 flex items-center gap-2 text-left cursor-pointer"
                         >
                           <CheckCircle2 size={13} className="text-green-600" />
                           Mark Completed
                         </button>
                         <button
                           onClick={() => updateStatus(row.id, "CANCELLED")}
-                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-red-50 hover:text-red-700 flex items-center gap-2 text-left"
+                          className="w-full px-3 py-1.5 text-xs text-gray-700 hover:bg-red-50 hover:text-red-700 flex items-center gap-2 text-left cursor-pointer"
                         >
                           <XCircle size={13} className="text-red-500" />
                           Cancel Request
@@ -295,7 +313,7 @@ export default function ConsultationTable({
                         <div className="border-t border-gray-100 my-1" />
                         <button
                           onClick={() => deleteRow(row.id)}
-                          className="w-full px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 text-left font-medium"
+                          className="w-full px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 text-left font-medium cursor-pointer"
                         >
                           <Trash2 size={13} />
                           Delete Request

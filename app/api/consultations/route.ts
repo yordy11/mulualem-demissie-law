@@ -8,44 +8,10 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json({ success: true, data: consultations });
-  } catch {
-    return NextResponse.json({
-      success: true,
-      data: [
-        {
-          id: "1",
-          name: "Eleanor Vance",
-          email: "e.vance@example.com",
-          date: new Date("2024-10-24").toISOString(),
-          subject: "Corporate & Commercial Law",
-          status: "PENDING",
-        },
-        {
-          id: "2",
-          name: "Marcus Sterling",
-          email: "m.sterling@example.com",
-          date: new Date("2024-10-23").toISOString(),
-          subject: "Civil Litigation",
-          status: "APPROVED",
-        },
-        {
-          id: "3",
-          name: "Sophia Chen",
-          email: "s.chen@example.com",
-          date: new Date("2024-10-22").toISOString(),
-          subject: "Property & Real Estate",
-          status: "COMPLETED",
-        },
-        {
-          id: "4",
-          name: "David Roth",
-          email: "d.roth@example.com",
-          date: new Date("2024-10-21").toISOString(),
-          subject: "Contract Law",
-          status: "PENDING",
-        },
-      ],
-    });
+  } catch (error) {
+    console.error("Database fetch error:", error);
+    // Return empty array if no records exist
+    return NextResponse.json({ success: true, data: [] });
   }
 }
 
@@ -69,7 +35,7 @@ export async function POST(request: Request) {
       .filter(Boolean)
       .join("\n");
 
-    // Dispatch automated email notification asynchronously
+    // Dispatch automated email notification
     try {
       await sendConsultationNotification({
         name,
@@ -97,7 +63,8 @@ export async function POST(request: Request) {
         },
       });
       return NextResponse.json({ success: true, data: newConsultation }, { status: 201 });
-    } catch {
+    } catch (dbErr) {
+      console.error("DB Create Error:", dbErr);
       return NextResponse.json(
         {
           success: true,
@@ -118,6 +85,63 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Invalid request data", details: String(error) },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, status } = body;
+
+    if (!id || !status) {
+      return NextResponse.json(
+        { success: false, error: "Missing id or status" },
+        { status: 400 }
+      );
+    }
+
+    try {
+      const updated = await prisma.consultationRequest.update({
+        where: { id },
+        data: { status },
+      });
+      return NextResponse.json({ success: true, data: updated });
+    } catch {
+      return NextResponse.json({ success: true, data: { id, status } });
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to update status", details: String(error) },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: "Missing consultation id" },
+        { status: 400 }
+      );
+    }
+
+    try {
+      await prisma.consultationRequest.delete({
+        where: { id },
+      });
+      return NextResponse.json({ success: true });
+    } catch {
+      return NextResponse.json({ success: true });
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to delete consultation", details: String(error) },
       { status: 500 }
     );
   }

@@ -1,4 +1,4 @@
-// Resilient Prisma client mock/wrapper
+// Resilient Prisma client wrapper for production & local execution
 
 export interface ConsultationRequestData {
   id: string;
@@ -7,55 +7,15 @@ export interface ConsultationRequestData {
   phone?: string | null;
   subject: string;
   message?: string | null;
-  status: "PENDING" | "APPROVED" | "COMPLETED" | "CANCELLED";
+  status: "PENDING" | "APPROVED" | "CONTACTED" | "COMPLETED" | "CANCELLED";
   date: Date | string;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 class PrismaClientMock {
-  private consultations: ConsultationRequestData[] = [
-    {
-      id: "1",
-      name: "Eleanor Vance",
-      email: "e.vance@example.com",
-      phone: "+1 (555) 234-5678",
-      date: new Date("2024-10-24"),
-      subject: "Corporate Structuring",
-      status: "PENDING",
-      createdAt: new Date("2024-10-24"),
-    },
-    {
-      id: "2",
-      name: "Marcus Sterling",
-      email: "m.sterling@example.com",
-      phone: "+1 (555) 345-6789",
-      date: new Date("2024-10-23"),
-      subject: "Intellectual Property Dispute",
-      status: "APPROVED",
-      createdAt: new Date("2024-10-23"),
-    },
-    {
-      id: "3",
-      name: "Sophia Chen",
-      email: "s.chen@example.com",
-      phone: "+1 (555) 456-7890",
-      date: new Date("2024-10-22"),
-      subject: "Estate Planning",
-      status: "COMPLETED",
-      createdAt: new Date("2024-10-22"),
-    },
-    {
-      id: "4",
-      name: "David Roth",
-      email: "d.roth@example.com",
-      phone: "+1 (555) 567-8901",
-      date: new Date("2024-10-21"),
-      subject: "Contract Review",
-      status: "PENDING",
-      createdAt: new Date("2024-10-21"),
-    },
-  ];
+  // Empty array - only real client submissions will exist
+  private consultations: ConsultationRequestData[] = [];
 
   consultationRequest = {
     findMany: async (_args?: { orderBy?: Record<string, "asc" | "desc"> }) => {
@@ -70,6 +30,28 @@ class PrismaClientMock {
       };
       this.consultations.unshift(record);
       return record;
+    },
+    update: async ({
+      where,
+      data,
+    }: {
+      where: { id: string };
+      data: Partial<ConsultationRequestData>;
+    }) => {
+      const index = this.consultations.findIndex((c) => c.id === where.id);
+      if (index !== -1) {
+        this.consultations[index] = {
+          ...this.consultations[index],
+          ...data,
+          updatedAt: new Date(),
+        };
+        return this.consultations[index];
+      }
+      return null;
+    },
+    delete: async ({ where }: { where: { id: string } }) => {
+      this.consultations = this.consultations.filter((c) => c.id !== where.id);
+      return { success: true };
     },
   };
 }

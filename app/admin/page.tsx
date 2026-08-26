@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Mail, Calendar, MessageSquare, Folder, Plus } from "lucide-react";
 import StatCard from "./components/StatCard";
@@ -7,6 +8,26 @@ import ConsultationTable from "./components/ConsultationTable";
 import UpcomingCard from "./components/UpcomingCard";
 
 export default function AdminDashboardPage() {
+  const [requestCount, setRequestCount] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const res = await fetch("/api/consultations", { cache: "no-store" });
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          setRequestCount(json.data.length);
+        }
+      } catch {
+        // Default
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadStats();
+  }, []);
+
   return (
     <main className="p-8 lg:p-10">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -37,17 +58,17 @@ export default function AdminDashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <StatCard
             label="NEW REQUESTS"
-            value="12"
-            subtitle="↑ +3 since yesterday"
-            subtitleColor="#16A34A"
+            value={loading ? "..." : String(requestCount)}
+            subtitle={requestCount === 0 ? "Inbox up to date" : `${requestCount} active inquiries`}
+            subtitleColor={requestCount > 0 ? "#16A34A" : "#6B7280"}
             icon={Mail}
             iconColor="#F59E0B"
             href="/admin/consultations"
           />
           <StatCard
             label="UPCOMING APPOINTMENTS"
-            value="5"
-            subtitle="Today"
+            value="0"
+            subtitle="No pending schedule"
             subtitleColor="#6B7280"
             icon={Calendar}
             iconColor="#F59E0B"
@@ -55,17 +76,17 @@ export default function AdminDashboardPage() {
           />
           <StatCard
             label="UNREAD MESSAGES"
-            value="8"
-            subtitle="! Action needed"
-            subtitleColor="#111827"
+            value="0"
+            subtitle="All messages reviewed"
+            subtitleColor="#6B7280"
             icon={MessageSquare}
             iconColor="#F59E0B"
             href="/admin/messages"
           />
           <StatCard
             label="ACTIVE CASES"
-            value="24"
-            subtitle="Across 3 practice areas"
+            value="0"
+            subtitle="Register new cases"
             subtitleColor="#6B7280"
             icon={Folder}
             iconColor="#F59E0B"
