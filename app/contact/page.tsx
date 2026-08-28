@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Mail, Phone, MapPin, CheckCircle2, Navigation, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle2, ExternalLink } from "lucide-react";
 
 const practiceAreas = [
   "Civil Litigation",
@@ -120,6 +121,23 @@ export default function ContactPage() {
                       <br />
                       Addis Ababa, Ethiopia
                     </p>
+                    <a
+                      href={googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 mt-3 text-xs font-bold text-[#B8860B] hover:text-[#92400E] underline underline-offset-4 uppercase tracking-wider transition-colors"
+                    >
+                      <Image
+                        src="/google-maps-icon.png"
+                        alt="Google Maps Pin"
+                        width={16}
+                        height={16}
+                        className="object-contain shrink-0"
+                        unoptimized
+                      />
+                      <span>View on Google Maps</span>
+                      <ExternalLink size={12} />
+                    </a>
                   </div>
                 </div>
 
@@ -169,7 +187,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Interactive Google Map Location Symbol Card */}
+            {/* Direct Google Maps Action Box */}
             <a
               href={googleMapsUrl}
               target="_blank"
@@ -178,8 +196,15 @@ export default function ContactPage() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-[#D4A843] text-[#0C0E1C] flex items-center justify-center font-bold shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                    <Navigation size={18} className="rotate-45" />
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold shrink-0 shadow-sm group-hover:scale-105 transition-transform p-1.5">
+                    <Image
+                      src="/google-maps-icon.png"
+                      alt="Google Maps"
+                      width={22}
+                      height={22}
+                      className="object-contain"
+                      unoptimized
+                    />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-[#D4A843]">

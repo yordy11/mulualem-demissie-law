@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Navigation, ExternalLink } from "lucide-react";
+import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 
 const navigationLinks = [
   { label: "Privacy Policy", href: "/privacy" },
@@ -99,11 +99,19 @@ export default function Footer() {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-1 bg-[#1F2937] hover:bg-[#374151] rounded text-[10px] font-bold text-[#D4A843] uppercase tracking-wider transition-colors border border-[#374151]"
+                    className="inline-flex items-center gap-1.5 mt-2.5 text-[11px] font-bold hover:underline transition-colors"
+                    style={{ color: "#D4A843" }}
                   >
-                    <Navigation size={11} className="rotate-45 text-[#D4A843]" />
-                    <span>Google Maps Location</span>
-                    <ExternalLink size={10} />
+                    <Image
+                      src="/google-maps-icon.png"
+                      alt="Google Maps Location Pin"
+                      width={14}
+                      height={14}
+                      className="object-contain shrink-0"
+                      unoptimized
+                    />
+                    <span>View on Google Maps</span>
+                    <ExternalLink size={11} className="opacity-80" />
                   </a>
                 </div>
               </div>
