@@ -50,6 +50,13 @@ const jsonLd = {
     "Professional, strategic, and client-focused legal representation in Civil Litigation, Contract Law, Corporate & Commercial Law, Real Estate, and Dispute Resolution.",
   telephone: ["+251917117939", "+251909838013"],
   email: "mulualemdm66@gmail.com",
+  hasMap:
+    "https://www.google.com/maps/place/Mulualem+Damissie+attorney+and+consultant+at+law+law/@9.0063465,38.7315822,17z/data=!3m1!4b1!4m6!3m5!1s0x164b87e84f1a8003:0x3fa25d85b5c1bdf0!8m2!3d9.0063465!4d38.7315822!16s%2Fg%2F11xd2mp3n0?entry=ttu",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 9.0063465,
+    longitude: 38.7315822,
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "Lideta Merkato Mall, 1st Floor, Office No. 134",

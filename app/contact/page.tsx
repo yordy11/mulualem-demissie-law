@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Mail, Phone, MapPin, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle2, ExternalLink } from "lucide-react";
 
 const practiceAreas = [
   "Civil Litigation",
@@ -13,6 +13,9 @@ const practiceAreas = [
   "Employment & Labour Law",
   "Dispute Resolution",
 ];
+
+const googleMapsUrl =
+  "https://www.google.com/maps/place/Mulualem+Damissie+attorney+and+consultant+at+law+law/@9.0063465,38.7315822,17z/data=!3m1!4b1!4m6!3m5!1s0x164b87e84f1a8003:0x3fa25d85b5c1bdf0!8m2!3d9.0063465!4d38.7315822!16s%2Fg%2F11xd2mp3n0?entry=ttu";
 
 export default function ContactPage() {
   const [fullName, setFullName] = useState("");
@@ -100,12 +103,12 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-6 text-sm text-[#374151]">
-              {/* Office Location */}
+              {/* Office Location with Direct Google Maps Link */}
               <div className="flex items-start gap-3.5">
                 <MapPin size={18} className="text-[#B8860B] shrink-0 mt-1" />
                 <div>
                   <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
-                    Office
+                    Office Location
                   </h3>
                   <p className="text-xs sm:text-sm leading-relaxed text-[#4B5563]">
                     Lideta Sub-City, Lideta
@@ -116,6 +119,15 @@ export default function ContactPage() {
                     <br />
                     Addis Ababa, Ethiopia
                   </p>
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-[#B8860B] hover:text-[#92400E] underline underline-offset-4 uppercase tracking-wider transition-colors"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink size={13} />
+                  </a>
                 </div>
               </div>
 

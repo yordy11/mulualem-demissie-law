@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 
 const navigationLinks = [
   { label: "Privacy Policy", href: "/privacy" },
@@ -8,6 +8,9 @@ const navigationLinks = [
   { label: "Disclaimer", href: "/disclaimer" },
   { label: "Contact", href: "/contact" },
 ];
+
+const googleMapsUrl =
+  "https://www.google.com/maps/place/Mulualem+Damissie+attorney+and+consultant+at+law+law/@9.0063465,38.7315822,17z/data=!3m1!4b1!4m6!3m5!1s0x164b87e84f1a8003:0x3fa25d85b5c1bdf0!8m2!3d9.0063465!4d38.7315822!16s%2Fg%2F11xd2mp3n0?entry=ttu";
 
 export default function Footer() {
   return (
@@ -82,13 +85,24 @@ export default function Footer() {
             <div className="text-xs text-[#D1D5DB] space-y-3 leading-relaxed">
               <div className="flex items-start gap-2.5">
                 <MapPin size={15} className="text-[#D4A843] shrink-0 mt-0.5" />
-                <p>
-                  Lideta subcity lideta bemerkato mall
-                  <br />
-                  1st floor office no 134
-                  <br />
-                  Addis Ababa, Ethiopia
-                </p>
+                <div>
+                  <p>
+                    Lideta Sub-City, Lideta, Merkato Mall
+                    <br />
+                    1st Floor, Office No. 134
+                    <br />
+                    Addis Ababa, Ethiopia
+                  </p>
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-1.5 text-[11px] font-bold text-[#D4A843] hover:underline"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink size={11} />
+                  </a>
+                </div>
               </div>
 
               <div className="flex items-center gap-2.5 pt-1">
