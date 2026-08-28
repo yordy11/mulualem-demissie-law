@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Mail, Phone, MapPin, CheckCircle2, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle2, Navigation, ExternalLink } from "lucide-react";
 
 const practiceAreas = [
   "Civil Litigation",
@@ -88,89 +88,114 @@ export default function ContactPage() {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Direct Contact Details */}
-          <div className="lg:col-span-5 space-y-8 bg-[#F9FAFB] p-8 border border-[#E5E7EB]">
-            <div>
-              <h2
-                className="text-xl font-bold text-[#111827] mb-2 uppercase tracking-wide"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                MULUALEM DEMISSIE ZERIHUN
-              </h2>
-              <p className="text-xs font-semibold text-[#B8860B] uppercase tracking-wider">
-                Lawyer and Attorney
-              </p>
-            </div>
-
-            <div className="space-y-6 text-sm text-[#374151]">
-              {/* Office Location with Direct Google Maps Link */}
-              <div className="flex items-start gap-3.5">
-                <MapPin size={18} className="text-[#B8860B] shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
-                    Office Location
-                  </h3>
-                  <p className="text-xs sm:text-sm leading-relaxed text-[#4B5563]">
-                    Lideta Sub-City, Lideta
-                    <br />
-                    Merkato Mall
-                    <br />
-                    1st Floor, Office No. 134
-                    <br />
-                    Addis Ababa, Ethiopia
-                  </p>
-                  <a
-                    href={googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-[#B8860B] hover:text-[#92400E] underline underline-offset-4 uppercase tracking-wider transition-colors"
-                  >
-                    <span>View on Google Maps</span>
-                    <ExternalLink size={13} />
-                  </a>
-                </div>
+          {/* Left Column: Direct Contact Details & Map Card */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-8 bg-[#F9FAFB] p-8 border border-[#E5E7EB] rounded-xs">
+              <div>
+                <h2
+                  className="text-xl font-bold text-[#111827] mb-2 uppercase tracking-wide"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  MULUALEM DEMISSIE ZERIHUN
+                </h2>
+                <p className="text-xs font-semibold text-[#B8860B] uppercase tracking-wider">
+                  Lawyer and Attorney
+                </p>
               </div>
 
-              {/* Email */}
-              <div className="flex items-start gap-3.5 pt-2">
-                <Mail size={18} className="text-[#B8860B] shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
-                    Email
-                  </h3>
-                  <a
-                    href="mailto:mulualemdm66@gmail.com"
-                    className="text-xs sm:text-sm text-[#111827] hover:text-[#B8860B] underline underline-offset-2 transition-colors"
-                  >
-                    mulualemdm66@gmail.com
-                  </a>
+              <div className="space-y-6 text-sm text-[#374151]">
+                {/* Office Location Box */}
+                <div className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-full bg-[#FEF3C7] text-[#92400E] flex items-center justify-center shrink-0 mt-0.5 border border-[#FDE68A]">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
+                      Office Location
+                    </h3>
+                    <p className="text-xs sm:text-sm leading-relaxed text-[#4B5563]">
+                      Lideta Sub-City, Lideta
+                      <br />
+                      Merkato Mall, 1st Floor, Office No. 134
+                      <br />
+                      Addis Ababa, Ethiopia
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Phone */}
-              <div className="flex items-start gap-3.5 pt-2">
-                <Phone size={18} className="text-[#B8860B] shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
-                    Phone
-                  </h3>
-                  <div className="space-y-1 text-xs sm:text-sm">
+                {/* Email */}
+                <div className="flex items-start gap-3.5 pt-2 border-t border-gray-200">
+                  <div className="w-9 h-9 rounded-full bg-[#FEF3C7] text-[#92400E] flex items-center justify-center shrink-0 mt-0.5 border border-[#FDE68A]">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
+                      Email
+                    </h3>
                     <a
-                      href="tel:+251917117939"
-                      className="block text-[#111827] hover:text-[#B8860B] transition-colors"
+                      href="mailto:mulualemdm66@gmail.com"
+                      className="text-xs sm:text-sm text-[#111827] hover:text-[#B8860B] underline underline-offset-2 transition-colors"
                     >
-                      +251 917 117 939
+                      mulualemdm66@gmail.com
                     </a>
-                    <a
-                      href="tel:0909838013"
-                      className="block text-[#111827] hover:text-[#B8860B] transition-colors"
-                    >
-                      0909 838 013
-                    </a>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex items-start gap-3.5 pt-2 border-t border-gray-200">
+                  <div className="w-9 h-9 rounded-full bg-[#FEF3C7] text-[#92400E] flex items-center justify-center shrink-0 mt-0.5 border border-[#FDE68A]">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-bold text-[#111827] uppercase tracking-wider mb-1">
+                      Phone
+                    </h3>
+                    <div className="space-y-1 text-xs sm:text-sm">
+                      <a
+                        href="tel:+251917117939"
+                        className="block text-[#111827] hover:text-[#B8860B] transition-colors font-medium"
+                      >
+                        +251 917 117 939
+                      </a>
+                      <a
+                        href="tel:0909838013"
+                        className="block text-[#111827] hover:text-[#B8860B] transition-colors font-medium"
+                      >
+                        0909 838 013
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Interactive Google Map Location Symbol Card */}
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-[#0C0E1C] text-white p-5 rounded-xs border border-black hover:bg-black transition-all duration-200 shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-full bg-[#D4A843] text-[#0C0E1C] flex items-center justify-center font-bold shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                    <Navigation size={18} className="rotate-45" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-[#D4A843]">
+                      Google Maps Location
+                    </p>
+                    <p className="text-xs text-gray-300 mt-0.5">
+                      Merkato Mall, 1st Floor, Office 134
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-wider group-hover:text-[#D4A843] transition-colors">
+                  <span className="hidden sm:inline">Get Directions</span>
+                  <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </div>
+            </a>
           </div>
 
           {/* Right Column: Consultation Request Form */}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
+import { Phone, Mail, MapPin, Navigation, ExternalLink } from "lucide-react";
 
 const navigationLinks = [
   { label: "Privacy Policy", href: "/privacy" },
@@ -82,9 +82,11 @@ export default function Footer() {
             >
               Offices &amp; Contact
             </h3>
-            <div className="text-xs text-[#D1D5DB] space-y-3 leading-relaxed">
-              <div className="flex items-start gap-2.5">
-                <MapPin size={15} className="text-[#D4A843] shrink-0 mt-0.5" />
+            <div className="text-xs text-[#D1D5DB] space-y-4 leading-relaxed">
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#1F2937] text-[#D4A843] flex items-center justify-center shrink-0 mt-0.5 border border-[#374151]">
+                  <MapPin size={14} />
+                </div>
                 <div>
                   <p>
                     Lideta Sub-City, Lideta, Merkato Mall
@@ -97,16 +99,19 @@ export default function Footer() {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-1.5 text-[11px] font-bold text-[#D4A843] hover:underline"
+                    className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-1 bg-[#1F2937] hover:bg-[#374151] rounded text-[10px] font-bold text-[#D4A843] uppercase tracking-wider transition-colors border border-[#374151]"
                   >
-                    <span>View on Google Maps</span>
-                    <ExternalLink size={11} />
+                    <Navigation size={11} className="rotate-45 text-[#D4A843]" />
+                    <span>Google Maps Location</span>
+                    <ExternalLink size={10} />
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 pt-1">
-                <Mail size={15} className="text-[#D4A843] shrink-0" />
+              <div className="flex items-center gap-3 pt-1">
+                <div className="w-7 h-7 rounded-full bg-[#1F2937] text-[#D4A843] flex items-center justify-center shrink-0 border border-[#374151]">
+                  <Mail size={13} />
+                </div>
                 <a
                   href="mailto:mulualemdm66@gmail.com"
                   className="hover:underline transition-colors"
@@ -116,8 +121,10 @@ export default function Footer() {
                 </a>
               </div>
 
-              <div className="flex items-start gap-2.5 pt-1">
-                <Phone size={15} className="text-[#D4A843] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3 pt-1">
+                <div className="w-7 h-7 rounded-full bg-[#1F2937] text-[#D4A843] flex items-center justify-center shrink-0 mt-0.5 border border-[#374151]">
+                  <Phone size={13} />
+                </div>
                 <div className="space-y-1">
                   <a
                     href="tel:+251917117939"
