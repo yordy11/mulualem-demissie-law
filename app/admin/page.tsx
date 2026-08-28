@@ -9,6 +9,7 @@ import UpcomingCard from "./components/UpcomingCard";
 
 export default function AdminDashboardPage() {
   const [requestCount, setRequestCount] = useState<number>(0);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,6 +19,8 @@ export default function AdminDashboardPage() {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
           setRequestCount(json.data.length);
+          const unread = json.data.filter((d: { status?: string }) => d.status === "PENDING").length;
+          setUnreadCount(unread);
         }
       } catch {
         // Default
@@ -59,7 +62,7 @@ export default function AdminDashboardPage() {
           <StatCard
             label="NEW REQUESTS"
             value={loading ? "..." : String(requestCount)}
-            subtitle={requestCount === 0 ? "Inbox up to date" : `${requestCount} active inquiries`}
+            subtitle={requestCount === 0 ? "Inbox up to date" : `${requestCount} total inquiries`}
             subtitleColor={requestCount > 0 ? "#16A34A" : "#6B7280"}
             icon={Mail}
             iconColor="#F59E0B"
@@ -75,10 +78,10 @@ export default function AdminDashboardPage() {
             href="/admin/appointments"
           />
           <StatCard
-            label="UNREAD MESSAGES"
-            value="0"
-            subtitle="All messages reviewed"
-            subtitleColor="#6B7280"
+            label="UNREAD INQUIRIES"
+            value={loading ? "..." : String(unreadCount)}
+            subtitle={unreadCount === 0 ? "All reviewed" : "! Action required"}
+            subtitleColor={unreadCount > 0 ? "#DC2626" : "#6B7280"}
             icon={MessageSquare}
             iconColor="#F59E0B"
             href="/admin/messages"
